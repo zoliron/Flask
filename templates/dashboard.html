@@ -1,19 +1,18 @@
 {% extends "baseTemplate.html" %}
 
 {% block content %}
-<ul class="nav nav-tabs">
-  <li class="nav-item dropdown show">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Dropdown</a>
-    <div class="dropdown-menu show" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-      <a class="dropdown-item" href="newTenant.html">Create New Tenant</a>
-      <a class="dropdown-item" href="#">Create New Application Profile</a>
-      <a class="dropdown-item" href="#">Create New Endpoint Group</a>
-      <a class="dropdown-item" href="#">Create New Bridge Domain</a>
-      <a class="dropdown-item" href="#">Create New VRF</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#">Separated link</a>
+<div class="jumbotron">
+    <div class="btn-group-vertical" data-toggle="buttons">
+        <button type="button" class="btn btn-outline-info">Create New Tenant</button>
+        <p></p>
+        <button type="button" class="btn btn-outline-info">Create New Application Profile</button>
+        <p></p>
+        <button type="button" class="btn btn-outline-info">Create New Endpoint Group</button>
+        <p></p>
+        <button type="button" class="btn btn-outline-info">Create New Bridge Domain</button>
+        <p></p>
+        <button type="button" class="btn btn-outline-info">Create New VRF</button>
+        <p></p>
     </div>
-  </li>
-</ul>
-
+</div>
 {% endblock %}
