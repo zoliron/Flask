@@ -3,16 +3,24 @@
 {% block content %}
 <div class="jumbotron">
     <div class="btn-group-vertical" data-toggle="buttons">
-        <button type="button" class="btn btn-outline-info">Create New Tenant</button>
-        <p></p>
-        <button type="button" class="btn btn-outline-info">Create New Application Profile</button>
-        <p></p>
-        <button type="button" class="btn btn-outline-info">Create New Endpoint Group</button>
-        <p></p>
-        <button type="button" class="btn btn-outline-info">Create New Bridge Domain</button>
-        <p></p>
-        <button type="button" class="btn btn-outline-info">Create New VRF</button>
-        <p></p>
+            <button type="submit" class="btn btn-outline-info">Create New Tenant</button>
+            <br>
+            <button type="submit" class="btn btn-outline-info">Create New Application Profile</button>
+            <br>
+            <button type="submit" class="btn btn-outline-info">Create New Endpoint Group</button>
+            <br>
+            <button type="submit" class="btn btn-outline-info">Create New Bridge Domain</button>
+            <br>
+            <button type="submit" class="btn btn-outline-info">Create New VRF</button>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="btn-group-vertical" data-toggle="buttons">
+        <form action="/logging" method="get">
+            <button type="submit" class="btn btn-outline-info">Specific Log</button>
+            <br>
+        </form>
     </div>
 </div>
 {% endblock %}

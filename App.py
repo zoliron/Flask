@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
+
+from LoginForm import LoginForm
+from RegisterForm import RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'R123r123'
@@ -27,18 +27,6 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('remember me')
-
-
-class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
 
 
 @app.route('/')
@@ -89,9 +77,12 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/new')
-def newTenant():
-    return render_template('newTenant.html')
+
+@app.route('/logging')
+@login_required
+def logging():
+    return "Hello"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
