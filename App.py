@@ -28,12 +28,12 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
+# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
+# Signin route
 @app.route('/signin', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -49,7 +49,7 @@ def login():
 
     return render_template('login.html', form=form)
 
-
+# Signup route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -64,20 +64,20 @@ def signup():
 
     return render_template('signup.html', form=form)
 
-
+# Dashboard route
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', name=current_user.username)
 
-
+# Logout route
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
+# Login route
 @app.route('/logging')
 @login_required
 def logging():
