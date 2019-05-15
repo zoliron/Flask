@@ -3,9 +3,9 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
-
 from LoginForm import LoginForm
 from RegisterForm import RegisterForm
+from Switch import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'R123r123'
@@ -81,7 +81,10 @@ def logout():
 @app.route('/logging')
 @login_required
 def logging():
-    return "Hello"
+    testSwitch = Switch()
+    switchDict = testSwitch.createSwitchDict("192.168.200.254", "manager", "citizen")
+    output = testSwitch.sendCommand(switchDict, "do show run int gi0/1")
+    return output
 
 
 if __name__ == '__main__':
