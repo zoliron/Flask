@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -64,12 +64,6 @@ def signup():
 
     return render_template('signup.html', form=form)
 
-# Dashboard route
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    return render_template('dashboard.html', name=current_user.username)
-
 # Logout route
 @app.route('/logout')
 @login_required
@@ -77,14 +71,34 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-# Login route
-@app.route('/logging')
+# Dashboard route
+@app.route('/dashboard')
 @login_required
-def logging():
+def dashboard():
+    return render_template('dashboard.html', name=current_user.username)
+
+
+# Switch Commands route
+@app.route('/switchCommandsRedirect')
+@login_required
+def switchCommandsRedirect():
+    return render_template('switchCommands.html')
+
+
+# Login route
+@app.route('/switchCommand', methods=['GET', 'POST'])
+@login_required
+def switchCommand():
     testSwitch = Switch()
-    switchDict = testSwitch.createSwitchDict("192.168.200.254", "manager", "citizen")
-    output = testSwitch.sendCommand(switchDict, "do show run int gi0/1")
-    return output
+    switchDict = testSwitch.createSwitchDict(request.form['ipAddress'], request.form['username'], request.form['password'])
+    command = "do " + request.form['command']
+    if 'show log' in command:
+        command = command + request.form['specificLog']
+        output = testSwitch.sendCommand(switchDict, command)
+        return render_template('output.html', output=output)
+    else:
+        output = testSwitch.sendCommand(switchDict, command)
+        return render_template('output.html', output=output)
 
 
 if __name__ == '__main__':

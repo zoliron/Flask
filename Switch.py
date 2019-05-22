@@ -14,7 +14,6 @@ class Switch:
     def sendCommand(self, SwitchDict, command):
         net_connect = ConnectHandler(**SwitchDict)
         output = net_connect.send_config_set(command)
-        print(output)
         net_connect.disconnect()
         return output
 
@@ -22,4 +21,4 @@ class Switch:
 if __name__ == '__main__':
     testSwitch = Switch()
     switchDict = testSwitch.createSwitchDict("192.168.200.254", "manager", "citizen")
-    testSwitch.sendCommand(switchDict, "do show run int gi0/1")
+    testSwitch.sendCommand(switchDict, "do show run int gi0/1", )
