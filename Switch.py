@@ -12,10 +12,13 @@ class Switch:
         return SwitchDict
 
     def sendCommand(self, SwitchDict, command):
-        net_connect = ConnectHandler(**SwitchDict)
-        output = net_connect.send_config_set(command)
-        net_connect.disconnect()
-        return output
+        try:
+            net_connect = ConnectHandler(**SwitchDict)
+            output = net_connect.send_config_set(command)
+            net_connect.disconnect()
+            return output
+        except:
+            return "Switch Authentication Failed"
 
 
 if __name__ == '__main__':

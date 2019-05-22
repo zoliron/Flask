@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -28,10 +28,13 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 # Home route
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
+
 
 # Signin route
 @app.route('/signin', methods=['GET', 'POST'])
@@ -46,8 +49,8 @@ def login():
                 return redirect(url_for('dashboard'))
 
         return '<h1>Invalid username or password</h1>'
-
     return render_template('login.html', form=form)
+
 
 # Signup route
 @app.route('/signup', methods=['GET', 'POST'])
@@ -64,12 +67,14 @@ def signup():
 
     return render_template('signup.html', form=form)
 
+
 # Logout route
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
+
 
 # Dashboard route
 @app.route('/dashboard')
@@ -95,11 +100,15 @@ def switchCommand():
     if 'show log' in command:
         command = command + request.form['specificLog']
         output = testSwitch.sendCommand(switchDict, command)
+        if output == "Switch Authentication Failed":
+            return render_template('switchCommands.html')
         return render_template('output.html', output=output)
     else:
         output = testSwitch.sendCommand(switchDict, command)
+        if output == "Switch Authentication Failed":
+            return render_template('switchCommands.html')
         return render_template('output.html', output=output)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
