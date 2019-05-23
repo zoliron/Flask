@@ -102,6 +102,8 @@ def switchCommand():
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
             return render_template('switchCommands.html', error=output)
+        if output == "":
+            return render_template('output.html', output='No Logs Found')
         return render_template('output.html', output=output)
     else:
         output = newSwitch.sendCommand(command)
