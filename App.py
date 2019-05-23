@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -6,6 +6,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from LoginForm import LoginForm
 from RegisterForm import RegisterForm
 from Switch import *
+import easygui
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'R123r123'
@@ -94,19 +95,18 @@ def switchCommandsRedirect():
 @app.route('/switchCommand', methods=['GET', 'POST'])
 @login_required
 def switchCommand():
-    testSwitch = Switch()
-    switchDict = testSwitch.createSwitchDict(request.form['ipAddress'], request.form['username'], request.form['password'])
-    command = "do " + request.form['command']
+    newSwitch = Switch(request.form['ipAddress'], request.form['username'], request.form['password'])
+    command = request.form['command']
     if 'show log' in command:
         command = command + request.form['specificLog']
-        output = testSwitch.sendCommand(switchDict, command)
+        output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html')
+            return render_template('switchCommands.html', error=output)
         return render_template('output.html', output=output)
     else:
-        output = testSwitch.sendCommand(switchDict, command)
+        output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html')
+            return render_template('switchCommands.html', error=output)
         return render_template('output.html', output=output)
 
 

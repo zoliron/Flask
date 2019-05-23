@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="jumbotron">
-
+    <b><label>Connection Status: </label></b>
+    {{ error }}
+    <br><br>
     <div class="btn-group-vertical">
         <form action="/switchCommand" method="post">
             <label>IP Address: </label>

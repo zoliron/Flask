@@ -2,26 +2,28 @@ from netmiko import ConnectHandler
 
 
 class Switch:
-    def createSwitchDict(self, ip, username, password):
-        SwitchDict = {
+    def __init__(self, ip, username, password):
+        self.SwitchDict = {
             'device_type': 'cisco_ios',
             'ip': ip,
             'username': username,
-            'password': password
+            'password': password,
         }
-        return SwitchDict
 
-    def sendCommand(self, SwitchDict, command):
+    def sendCommand(self, command):
         try:
-            net_connect = ConnectHandler(**SwitchDict)
-            output = net_connect.send_config_set(command)
-            net_connect.disconnect()
-            return output
+            net_connect = ConnectHandler(**self.SwitchDict)
         except:
             return "Switch Authentication Failed"
+        output = net_connect.send_command(command, delay_factor=0.25)
+        net_connect.disconnect()
+        return output
 
-
-if __name__ == '__main__':
-    testSwitch = Switch()
-    switchDict = testSwitch.createSwitchDict("192.168.200.254", "manager", "citizen")
-    testSwitch.sendCommand(switchDict, "do show run int gi0/1", )
+    def sendCommandsList(self, command):
+        try:
+            net_connect = ConnectHandler(**self.SwitchDict)
+        except:
+            return "Switch Authentication Failed"
+        output = net_connect.send_config_set("do " + command, delay_factor=0.25)
+        net_connect.disconnect()
+        return output
