@@ -107,13 +107,27 @@ def switchCommand():
             return render_template('output.html', output='No Logs Found')
         return render_template('output.html', output=output)
     elif 'vrf' in command:
-        command = command + request.form['specificVRF']
+        if request.form['sxpVRF'] != "":
+            command = command + request.form['sxpVRF']
+        elif request.form['PingVRF'] != "" and request.form['pingVRFAddress'] != "":
+            command = command + request.form['PingVRF'] + " " + request.form['pingVRFAddress']
+        elif request.form['ArpVRF'] != "":
+            command = command + request.form['ArpVRF']
         print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
             return render_template('switchCommands.html', error=output)
         if output == "":
-            return render_template('output.html', output='No Logs Found')
+            return render_template('output.html', output='Wrong VRF')
+        return render_template('output.html', output=output)
+    elif 'ping' in command:
+        command = command + request.form['pingAddress']
+        print(command)
+        output = newSwitch.sendCommand(command)
+        if output == "Switch Authentication Failed":
+            return render_template('switchCommands.html', error=output)
+        if output == "":
+            return render_template('output.html', output='No IP Address Inserted')
         return render_template('output.html', output=output)
     else:
         print(command)
