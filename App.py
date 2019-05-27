@@ -99,6 +99,16 @@ def switchCommand():
     command = request.form['command']
     if 'show log' in command:
         command = command + request.form['specificLog']
+        print(command)
+        output = newSwitch.sendCommand(command)
+        if output == "Switch Authentication Failed":
+            return render_template('switchCommands.html', error=output)
+        if output == "":
+            return render_template('output.html', output='No Logs Found')
+        return render_template('output.html', output=output)
+    elif 'vrf' in command:
+        command = command + request.form['specificVRF']
+        print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
             return render_template('switchCommands.html', error=output)
@@ -106,6 +116,7 @@ def switchCommand():
             return render_template('output.html', output='No Logs Found')
         return render_template('output.html', output=output)
     else:
+        print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
             return render_template('switchCommands.html', error=output)
