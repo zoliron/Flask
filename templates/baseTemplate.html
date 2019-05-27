@@ -3,10 +3,21 @@
 <head>
     <link rel="stylesheet" href="/static/css/bootstrap-flatly.css"/>
     <link rel="stylesheet" href="/static/css/zoli.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap3.3.4.min.js"></script>
     <script src="/static/js/zoli.js"></script>
-
+    <script type="text/javascript">
+        $(function(){
+            $('#load').click(function(){
+                  var $this = $(this);
+                  $this.button('loading');
+                  setTimeout(function(){
+                    $this.button('reset'); }, 8000);
+            });
+        });
+    </script>
     <meta charset="UTF-8">
     <title>ZoliWeb</title>
 </head>
