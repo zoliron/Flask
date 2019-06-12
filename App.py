@@ -6,7 +6,6 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from LoginForm import LoginForm
 from RegisterForm import RegisterForm
 from Switch import *
-import easygui
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'R123r123'
@@ -47,7 +46,7 @@ def login():
         if user:
             if check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('index'))
 
         return '<h1>Invalid username or password</h1>'
     return render_template('login.html', form=form)
