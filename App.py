@@ -3,6 +3,8 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
+
+import ExcelRead
 from LoginForm import LoginForm
 from RegisterForm import RegisterForm
 from Switch import *
@@ -87,21 +89,25 @@ def dashboard():
 @app.route('/switchCommandsRedirect')
 @login_required
 def switchCommandsRedirect():
-    return render_template('switchCommands.html')
+    switches = ExcelRead.openExcel()
+    return render_template('switchCommands.html', switches=switches)
 
 
 # Login route
 @app.route('/switchCommand', methods=['GET', 'POST'])
 @login_required
 def switchCommand():
-    newSwitch = Switch(request.form['ipAddress'], request.form['username'], request.form['password'])
+    # newSwitch = Switch(request.form['ipAddress'], request.form['username'], request.form['password'])
+    switchIp = str(request.form['selectedSwitch']).split(' - ')
+    newSwitch = Switch(switchIp[1], request.form['username'], request.form['password'])
     command = request.form['command']
     if 'show log' in command:
         command = command + request.form['specificLog']
         print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html', error=output)
+            switches = ExcelRead.openExcel()
+            return render_template('switchCommands.html', error=output, switches=switches)
         if output == "":
             return render_template('output.html', output='No Logs Found')
         return render_template('output.html', output=output)
@@ -115,7 +121,8 @@ def switchCommand():
         print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html', error=output)
+            switches = ExcelRead.openExcel()
+            return render_template('switchCommands.html', error=output, switches=switches)
         if output == "":
             return render_template('output.html', output='Wrong VRF')
         return render_template('output.html', output=output)
@@ -124,7 +131,8 @@ def switchCommand():
         print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html', error=output)
+            switches = ExcelRead.openExcel()
+            return render_template('switchCommands.html', error=output, switches=switches)
         if output == "":
             return render_template('output.html', output='No IP Address Inserted')
         return render_template('output.html', output=output)
@@ -132,7 +140,8 @@ def switchCommand():
         print(command)
         output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
-            return render_template('switchCommands.html', error=output)
+            switches = ExcelRead.openExcel()
+            return render_template('switchCommands.html', error=output, switches=switches)
         return render_template('output.html', output=output)
 
 

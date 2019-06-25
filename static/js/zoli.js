@@ -10,10 +10,10 @@ function showPage() {
 }
 
 $(function(){
-    $('.btn').click(function(){
+    $('.loadingBtn').click(function(){
           var $this = $(this);
           $this.button('loading');
           setTimeout(function(){
-            $this.button('reset'); }, 8000);
+            $this.button('reset'); }, 30000);
     });
 });

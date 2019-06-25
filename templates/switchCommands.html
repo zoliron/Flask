@@ -8,37 +8,44 @@
     <form action="/switchCommand" method="post">
         <label>IP Address: </label>
         <input type="text" placeholder="Enter IP Address" name="ipAddress">
+        <label>Switches: </label>
+        <select name="selectedSwitch">
+            {% for switch in switches %}
+            <option value="{{ switch }}">{{ switch }}</option>
+            {% endfor %}
+        </select>
         <label>Username: </label>
         <input type="text" placeholder="Enter username" name="username">
         <label>Password </label>
-        <input type="password" placeholder="Enter password" name="password"><br><br><br>
+        <input type="password" placeholder="Enter password" name="password">
+        <br><br><br>
         <div class="btn-group col-md-12">
             <div class="col-md-6">
                 <input type="text" placeholder="Specific Log" name="specificLog" class="col-md-4"><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show log | i ">Show Log</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show run">Show Run</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show env all">Show Environment</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show interface status">Show Interface Status</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show interface description">Show Interface Description</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show switch">Show Switch Stack</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cdp neighbors">Show CDP Neighbors</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip int br | ex un">Show IP Interface Brief</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show mac address-table">Show MAC Address Table</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip ospf neighbor">Show IP Ospf Neighbor</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show log | i ">Show Log</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show run">Show Run</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show env all">Show Environment</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show interface status">Show Interface Status</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show interface description">Show Interface Description</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show switch">Show Switch Stack</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cdp neighbors">Show CDP Neighbors</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip int br | ex un">Show IP Interface Brief</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show mac address-table">Show MAC Address Table</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip ospf neighbor">Show IP Ospf Neighbor</button><br><br>
             </div>
             <div class="col-md-6">
                 <input type="text" placeholder="Enter VRF" name="sxpVRF" class="col-md-4"><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts sxp connections vrf ">Show SXP Connections</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts role-based permissions">Show CTS Role-Based Permissions</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts pacs">Show CTS Pacs</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts sxp connections vrf ">Show SXP Connections</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts role-based permissions">Show CTS Role-Based Permissions</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show cts pacs">Show CTS Pacs</button><br><br>
                 <input type="text" placeholder="IP Address" name="pingAddress" class="col-md-4"><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="ping ">Ping From Switch</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="ping ">Ping From Switch</button><br><br>
                 <input type="text" placeholder="IP Address" name="pingVRFAddress" class="col-md-2">
                 <input type="text" placeholder="Enter VRF" name="PingVRF" class="col-md-2"><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="ping vrf ">Ping From Switch</button><br><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip arp">Show IP Arp</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="ping vrf ">Ping From Switch</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip arp">Show IP Arp</button><br><br>
                 <input type="text" placeholder="Enter VRF" name="ArpVRF" class="col-md-4"><br>
-                <button type="submit" class="btn btn-outline-info col-md-4" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip arp vrf ">Show IP Arp VRF</button><br><br>
+                <button type="submit" class="btn btn-outline-info col-md-4 loadingBtn" name="command" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait" value="show ip arp vrf ">Show IP Arp VRF</button><br><br>
             </div>
         </div>
     </form>
