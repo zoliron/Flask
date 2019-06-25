@@ -97,9 +97,13 @@ def switchCommandsRedirect():
 @app.route('/switchCommand', methods=['GET', 'POST'])
 @login_required
 def switchCommand():
-    # newSwitch = Switch(request.form['ipAddress'], request.form['username'], request.form['password'])
-    switchIp = str(request.form['selectedSwitch']).split(' - ')
-    newSwitch = Switch(switchIp[1], request.form['username'], request.form['password'])
+    if request.form['ipAddress'] != '':
+        print('Manual Switch')
+        newSwitch = Switch(request.form['ipAddress'], request.form['username'], request.form['password'])
+    else:
+        print('List Switch')
+        switchIp = str(request.form['selectedSwitch']).split(' - ')
+        newSwitch = Switch(switchIp[1], request.form['username'], request.form['password'])
     command = request.form['command']
     if 'show log' in command:
         command = command + request.form['specificLog']
