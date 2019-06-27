@@ -106,9 +106,12 @@ def switchCommand():
         newSwitch = Switch(switchIp[1], request.form['username'], request.form['password'])
     command = request.form['command']
     if 'show log' in command:
-        command = command + request.form['specificLog']
-        print(command)
-        output = newSwitch.sendCommand(command)
+        if request.form['specificLog'] != '':
+            command = command + '| i ' + request.form['specificLog']
+            print(command)
+            output = newSwitch.sendCommand(command)
+        else:
+            output = newSwitch.sendCommand(command)
         if output == "Switch Authentication Failed":
             switches = ExcelRead.openExcel()
             return render_template('switchCommands.html', error=output, switches=switches)
