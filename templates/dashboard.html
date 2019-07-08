@@ -2,11 +2,26 @@
 
 {% block content %}
 <div class="jumbotron">
-    <div class="btn-group-vertical">
-        <form action="/switchCommandsRedirect">
-            <button type="submit" class="btn btn-outline-info">Switch Commands</button>
+    <div class="btn-group col-md-12">
+        <div class="col-md-4">
+            <form action="/switchCommandsRedirect">
+                <button type="submit" class="btn btn-outline-info">Switch Commands</button>
+            </form>
             <br>
-        </form>
+            <form action="/switchCommandsRedirect">
+                <button type="submit" class="btn btn-outline-info">Dot1x Commands</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form action="/switchCommandsRedirect">
+                <button type="submit" class="btn btn-outline-info">Switch Configuration</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form action="/switchCommandsRedirect">
+                <button type="submit" class="btn btn-outline-info">Switch Upgrade</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
