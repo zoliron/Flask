@@ -49,3 +49,7 @@
   display: none;
   text-align: center;
 }
+
+.centeredDiv {
+    text-align: center;
+}
